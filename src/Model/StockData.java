@@ -14,7 +14,7 @@ public class StockData {
      * @param value The value that the Stock had at the given date
      * @param date The date of the given value
      */
-    public StockData(int value, Date date, Stock stock) {
+    public StockData(int value, Date date) {
         this.value = value;
         this.date = date;
     }
