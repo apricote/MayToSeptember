@@ -1,12 +1,14 @@
 package Model;
 
+import java.math.BigDecimal;
+
 /**
  * A StockData Object represents the Stock data for a single Day.
  * It knows the value of the Stock at that day and the day it references too.
  * This object is immutable.
  */
 public class StockData {
-    private int value;
+    private BigDecimal value;
     private Date date;
 
     /**
@@ -14,7 +16,7 @@ public class StockData {
      * @param value The value that the Stock had at the given date
      * @param date The date of the given value
      */
-    public StockData(int value, Date date) {
+    public StockData(BigDecimal value, Date date) {
         this.value = value;
         this.date = date;
     }
@@ -23,7 +25,7 @@ public class StockData {
      * Returns the value of this StockData object
      * @return value
      */
-    public int getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
