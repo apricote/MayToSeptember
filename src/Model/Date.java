@@ -85,4 +85,14 @@ public class Date implements Comparable<Date> {
             return 0;
         }
     }
+
+    /**
+     * Returns the represented date in the format 'YYYY-MM-DD'
+     * @return YYYY-MM-DD
+     */
+    @Override
+    public String toString() {
+        String date = this.getYear() + "-" + this.getMonth() + "-" + this.getDay();
+        return date;
+    }
 }
