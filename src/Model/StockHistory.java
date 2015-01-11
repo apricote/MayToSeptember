@@ -80,11 +80,9 @@ public class StockHistory {
      * @return Returns the number of Objects that were deleted from the History
      */
     public int deleteStockData(Date fromDate, Date toDate) {
-        SortedMap toBeDeleted = history.subMap(fromDate, toDate);
+        SortedMap<Date, StockData> toBeDeleted = history.subMap(fromDate, toDate);
 
-        for(Date d : (Set<Date>) toBeDeleted.keySet()) {
-            history.remove(d);
-        }
+        toBeDeleted.keySet().stream().forEach(d -> history.remove(d));
 
         return toBeDeleted.size();
     }
