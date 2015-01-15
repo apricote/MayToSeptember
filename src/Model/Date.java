@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.*;
+
 /**
  * This class resembles a Date.
  * Any object of this class is immutable and can therefore not be changed.
@@ -94,5 +96,55 @@ public class Date implements Comparable<Date> {
     public String toString() {
         String date = this.getYear() + "-" + this.getMonth() + "-" + this.getDay();
         return date;
+    }
+
+    /**
+     * This method creates the "Tommorow-Date" based on the view of the Object.
+     * It considers the month transition and the year transition and even leap-years.
+     * Only if the current value of Date is a valid Date the correct functionalty of this function is guaranteed.
+     * @return the following date
+     */
+    public Date next() {
+        int nextYear, nextMonth, nextDay;
+
+        // Year
+        if(getDay() == 31 && getMonth() == 12) {
+            nextYear = getYear() + 1;
+        } else {
+            nextYear = getYear();
+        }
+
+        // Month + Day
+        if( (daysOfMonth(getMonth(), getYear()) == getDay())) {
+            nextMonth = getMonth() + 1;
+            nextDay = 1;
+        } else {
+            nextMonth = getMonth();
+            nextDay = getDay() + 1;
+        }
+
+        return new Date(nextDay, nextMonth, nextYear);
+    }
+
+    /**
+     * Calculates the days in the month in the year given.
+     * @param month days in <code>month</code>
+     * @param year to check if <code>month</code> is a leap year
+     * @return days in the month
+     */
+    private static int daysOfMonth(int month, int year) {
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+            return 31;
+        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+            return 30;
+        } else if (month == 2) {
+            if (new GregorianCalendar().isLeapYear(year)) {
+                return 29;
+            } else {
+                return 28;
+            }
+        } else {
+            return -1;
+        }
     }
 }
