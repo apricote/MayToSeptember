@@ -6,7 +6,6 @@ import Controller.Settings;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.util.Map;
 
 public class DatabaseConnection {
     private Connection connection = null;
