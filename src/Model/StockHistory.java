@@ -1,8 +1,6 @@
 package Model;
 
 import java.util.*;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * This Object resembles the Value history of one Stock.
