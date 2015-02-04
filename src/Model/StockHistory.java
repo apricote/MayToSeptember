@@ -99,28 +99,7 @@ public class StockHistory {
         DateRange range = new DateRange(beginDate, endDate);
 
         getHistory().keySet().stream()
-                            .filter(e -> isInYearlyRange(range, e))
+                            .filter(e -> range.isInYearlyRange(e))
                             .forEach(e -> history.remove(e));
-    }
-
-    /**
-     * Checks if the Month and the Day of the given Date are in the DateRange.
-     *
-     * This method is needed because <code>Model.DateRange:isInRange</code> also checks for the year.
-     * @param range The range the date is maybe in
-     * @param date The date that is checked for
-     * @return if the date, without paying attention to the year, is in the range
-     */
-    private boolean isInYearlyRange(DateRange range, Date date) {
-        Date rangeBegin = range.getBeginDate();
-        Date rangeEnd = range.getEndDate();
-
-        if(rangeBegin.getMonth() <= date.getMonth() && rangeEnd.getMonth() >= date.getMonth()) {
-            if(rangeBegin.getDay() <= date.getDay() && rangeEnd.getDay() >= date.getDay()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

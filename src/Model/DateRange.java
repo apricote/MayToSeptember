@@ -69,4 +69,23 @@ public class DateRange {
             return false;
         }
     }
+
+    /**
+     * Checks if the Month and the Day of the given Date are in the DateRange.
+     *
+     * @param date The date that is checked for
+     * @return if the date, without paying attention to the year, is in the range
+     */
+    public boolean isInYearlyRange(Date date) {
+        Date rangeBegin = getBeginDate();
+        Date rangeEnd = getEndDate();
+
+        if(rangeBegin.getMonth() <= date.getMonth() && rangeEnd.getMonth() >= date.getMonth()) {
+            if(rangeBegin.getDay() <= date.getDay() && rangeEnd.getDay() >= date.getDay()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
