@@ -30,9 +30,9 @@ public class Date implements Comparable<Date> {
      * @param date String in YYYY-MM-DD format
      */
     public Date(String date) {
-        this.year = Integer.parseInt(date.substring(0, 3));
-        this.month = Integer.parseInt(date.substring(5, 6));
-        this.day = Integer.parseInt(date.substring(8, 9));
+        this.year = Integer.parseInt(date.substring(0, 4));
+        this.month = Integer.parseInt(date.substring(5, 7));
+        this.day = Integer.parseInt(date.substring(8, 10));
     }
 
     /**
