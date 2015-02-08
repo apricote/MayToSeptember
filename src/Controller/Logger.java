@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * This class is responsible for all the logging that need to be done.
@@ -19,12 +21,16 @@ public class Logger {
      * @param level the level of the Message
      */
     public static void log(String msg, LoggingLevel level) {
-        if (level.level() <= Settings.LOGGING_LEVEL.level()) {
-            System.out.println(level + ": " + msg);
+        if (level.level() > Settings.LOGGING_LEVEL.level()) {
+            return;
         }
 
-        String loggedMessage = level + ": " + msg + "\n";
+        String levelString = "[" + level + "]";
+        String timeString = "[" + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSS")) + "]";
 
+        String loggedMessage = timeString + " " + levelString + ": " + msg + System.lineSeparator();
+
+        System.out.print(loggedMessage);
         try {
             Files.write(Paths.get("log.txt"), loggedMessage.getBytes(), StandardOpenOption.APPEND, StandardOpenOption.CREATE);
         } catch (IOException e) {
