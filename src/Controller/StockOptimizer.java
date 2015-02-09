@@ -212,9 +212,9 @@ public class StockOptimizer {
 
 
         //Actually calculate performanceIndex
-        // (endingMoney - starterMoney) / starterMoney (Prozentuale Verbesserung)
+        // endingMoney / starterMoney
         BigDecimal endingMoney = assets.amountOfMoney;
-        performanceIndex = endingMoney.subtract(starterMoney).divide(starterMoney, MathContext.DECIMAL32).floatValue(); //Just using DECIMAL 32 here because its going to a float anyway
+        performanceIndex = endingMoney.divide(starterMoney, MathContext.DECIMAL32).floatValue(); //Just using DECIMAL 32 here because its going to a float anyway
 
         Logger.log("Calculated performanceIndex: " + performanceIndex, LoggingLevel.DEBUG);
         Logger.log("For Days: Sell: " + dateCombination[0].toString() + " Buy: " + dateCombination[1].toString(), LoggingLevel.DEBUG);
