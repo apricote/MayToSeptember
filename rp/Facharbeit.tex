@@ -1,14 +1,28 @@
-\documentclass[11pt, a4paper, titlepage, draft]{report}
+\documentclass[12pt, a4paper, titlepage, draft]{report}
 
     %Germanish stuff
     \usepackage[utf8x]{inputenc}
     \usepackage[T1]{fontenc}
     \usepackage{ngerman}
-    \usepackage{geometry}
     
-    \geometry{a4paper, top=25mm, left=40mm, right=25mm, bottom=35mm, headsep=10mm, footskip=12mm}
+    % Seitenränder
+    \usepackage{geometry}
+    \geometry{a4paper, top=25mm, left=25mm, right=45mm, bottom=20mm, headsep=10mm, footskip=10mm}
 
-    \usepackage[doublespacing]{setspace}
+    % 1 1/2 Zeilig
+    \usepackage[onehalfspacing]{setspace}
+
+    % Change Font to Arial
+    \renewcommand*\rmdefault{uarial} % TODO Font doesnt work 
+
+    % Kopf-/Fußzeile % TODO needs to be fixed
+    \usepackage{fancyhdr}
+    \fancypagestyle{plain}{
+        \fancyhead{\centering \thepage}
+        \fancyfoot{}
+        \renewcommand{\headrulewidth}{0pt}
+        \renewcommand{\headrulewidth}{0pt}
+    }
 
 \begin{document}
 
@@ -16,9 +30,10 @@
     \title{Entwicklung eines Algorithmus zur Lösung eines Optimierungsproblemes und der Datenanalyse anhand des Beispiels der Dax-Börsendaten}
     \author{Julian Tölle\\
             Ev. Gymnasium Werther\\
-            Informatik-LK}
-    \date{Schuljahr 2014/15}
-
+            Informatik-LK\\
+            Herr Möllenbrock}
+    \date{Schuljahr 2014/15} 
+    
     \maketitle
 
     \tableofcontents    
