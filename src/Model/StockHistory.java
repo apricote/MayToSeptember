@@ -75,17 +75,19 @@ public class StockHistory {
 
     /**
      * Deletes all the StockData Objects from this History that are between, and including, the two given Dates.
-     * @param fromDate The beginning Date of the deletion, inclusive // TODO widerspruch
-     * @param toDate The ending Date of the deletion, exclusive
-     * @return Returns the number of Objects that were deleted from the History
+     * @param beginDate The beginning Date of the deletion
+     * @param endDate The ending Date of the deletion
      */
-    public int deleteStockData(Date fromDate, Date toDate) {
-        SortedMap<Date, StockData> toBeDeleted = history.subMap(fromDate, toDate);
+    public void deleteStockData(Date beginDate, Date endDate) {
+        DateRange range = new DateRange(beginDate, endDate);
 
-        toBeDeleted.keySet().stream()
-                            .forEach(d -> history.remove(d));
-
-        return toBeDeleted.size();
+        Iterator<Map.Entry<Date, StockData>> entries = getHistory().entrySet().iterator();
+        while (entries.hasNext()) {
+            Date entry = entries.next().getKey();
+            if(range.isInRange(entry)) {
+                entries.remove();
+            }
+        }
     }
 
     /**
@@ -98,8 +100,12 @@ public class StockHistory {
     public void deleteStockDataEveryYear(Date beginDate, Date endDate) {
         DateRange range = new DateRange(beginDate, endDate);
 
-        getHistory().keySet().stream()
-                            .filter(e -> range.isInYearlyRange(e))
-                            .forEach(e -> history.remove(e));
+        Iterator<Map.Entry<Date, StockData>> entries = getHistory().entrySet().iterator();
+        while (entries.hasNext()) {
+            Date entry = entries.next().getKey();
+            if(range.isInYearlyRange(entry)) {
+                entries.remove();
+            }
+        }
     }
 }
