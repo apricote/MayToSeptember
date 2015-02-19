@@ -81,15 +81,13 @@ public class StockOptimizer {
     }
 
     /**
-     * Optimizes the Stock. It doesnt return the stock but just changes <code>Stock.optimizedHistory</code>
+     * Optimizes the Stock. It doesnt return the stock but just changes <code>Stock.optimalDays</code>
      * of the <code>stock</code> Object. It does this by generating a list of all possible date combinations.
      * Then iterating over the list to calculate each <code>performanceIndex</code> and to get the maximum value.
      *
-     * With the given dates the optimized History is generated and saved in the Stock Object
+     * With the given date ranges the optimal selling and buying dates are calculated and saved in the Stock Object
      */
     public void optimize() {
-        StockHistory optimizedHistory = stock.getHistory();
-
         Vector<Date[]> dateCombinations = getPossibleDateCombinations();
 
         Date[] currentOptimum = dateCombinations.firstElement();
@@ -107,9 +105,7 @@ public class StockOptimizer {
         Logger.log("Final optimum: " + performanceIndexOptimum, LoggingLevel.INFO);
         Logger.log("For Days: Sell: " + currentOptimum[0] + " Buy: " + currentOptimum[1], LoggingLevel.INFO);
 
-        optimizedHistory.deleteStockDataEveryYear(currentOptimum[0], currentOptimum[1]);
-
-        stock.setOptimizedHistory(optimizedHistory);
+        stock.setOptimalDays(currentOptimum);
     }
 
     /**

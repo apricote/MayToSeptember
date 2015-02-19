@@ -2,23 +2,25 @@ package Model;
 
 /**
  * This class resembles a single Stock and its market history.
- * The optimizedHistory is just a second slot for another, not real, history that should be optimized,
+ *
+ * The optimalDays are the optimal selling and buying dates for this stock,
  * though there is no control that it is really optimized and can even be worse than the normal history.
  */
 public class Stock {
     private String name;
     private String shortName;
     private StockHistory history;
-    private StockHistory optimizedHistory;
+    private Date[] optimalDays; // [0] => sell, [1] => buy
 
     /**
      * Creates a new Stock object with the given name and shortName. Neither the history nor the optimized history will be set.
-     * Instead a new and empty StockHistory Object will be used as <code>history</code> and <code>optimizedHistory</code>
+     * Instead a new and empty StockHistory Object will be used as <code>history</code> and and a <code>null</code>-Object
+     * as the <code>optimalDays</code>
      * @param name The name of the Stock
      * @param shortName The short name of the Stock
      */
     public Stock(String name, String shortName) {
-        this(name, shortName, new StockHistory(), new StockHistory());
+        this(name, shortName, new StockHistory(), null);
     }
 
 
@@ -30,21 +32,21 @@ public class Stock {
      * @param history The history of the stock
      */
     public Stock(String name, String shortName, StockHistory history) {
-        this(name, shortName, history, new StockHistory());
+        this(name, shortName, history, null);
     }
 
     /**
-     * Creates a new Stock object with the given name, shortName, histoy and optimizedHistory.
+     * Creates a new Stock object with the given name, shortName, histoy and optimalDays.
      * @param name The name of the Stock
      * @param shortName The short name of the Stock
      * @param history The history of the stock
-     * @param optimizedHistory The optimized history of the stock
+     * @param optimalDays The optimal buying and selling date of the Stock
      */
-    public Stock(String name, String shortName, StockHistory history, StockHistory optimizedHistory) {
+    public Stock(String name, String shortName, StockHistory history, Date[] optimalDays) {
         this.name = name;
         this.shortName = shortName;
         this.history = history;
-        this.optimizedHistory = optimizedHistory;
+        this.optimalDays = optimalDays;
     }
 
     /**
@@ -96,18 +98,26 @@ public class Stock {
     }
 
     /**
-     * Returns the optimized history of the Stock
-     * @return optimizedHistory
+     * Returns the optimal buying and selling dates that were calculated for the in
+     * the last Optimizer run for this Stock.
+     *
+     * It is not guaranteed that this is the absolute maximum for the Stock, but rather
+     * the maximum for the given Ranges of the Optimizer for that run.
+     * @return optimalDays
      */
-    public StockHistory getOptimizedHistory() {
-        return optimizedHistory;
+    public Date[] getOptimalDays() {
+        return optimalDays;
     }
 
     /**
-     * Sets the optimized history of the Stock
-     * @param optimizedHistory The new optimized history
+     * Sets the optimal selling and buying date for this Stock.
+     *
+     * This does not need to be the absolute maximum, possible for the stock,
+     * but rather the maximum that is achievable in the given buying and selling date ranges,
+     * that were given to the Optimizer.
+     * @param optimalDays The new optimized history
      */
-    public void setOptimizedHistory(StockHistory optimizedHistory) {
-        this.optimizedHistory = optimizedHistory;
+    public void setOptimalDays(Date[] optimalDays) {
+        this.optimalDays = optimalDays;
     }
 }
