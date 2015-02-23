@@ -18,6 +18,5 @@ public enum LoggingLevel {
     public int level() {
         return level;
     }
-
-    ;
+    
 }
