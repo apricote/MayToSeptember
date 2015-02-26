@@ -20,6 +20,7 @@ public class DatabaseConnection {
             Logger.log("JDBC Driver not found", LoggingLevel.ERROR);
             e.printStackTrace();
         }
+        Logger.log("JDBC Driver loaded!", LoggingLevel.DEBUG);
 
         try {
             connection = DriverManager.getConnection(Settings.JDBC_CONNECTION_STRING, Settings.MYSQL_USERNAME, Settings.MYSQL_PASSWORD);
@@ -29,6 +30,7 @@ public class DatabaseConnection {
             Logger.log("VendorError: " + e.getErrorCode(), LoggingLevel.DEBUG);
             e.printStackTrace();
         }
+        Logger.log("Connection to Database established", LoggingLevel.DEBUG);
     }
 
     /**
@@ -67,6 +69,7 @@ public class DatabaseConnection {
             Logger.log("VendorError: " + e.getErrorCode(), LoggingLevel.DEBUG);
             e.printStackTrace();
         }
+        Logger.log("Stock returned from Database", LoggingLevel.DEBUG);
         return resultStock;
     }
 
@@ -95,7 +98,7 @@ public class DatabaseConnection {
                                                 "VALUES (" + entry.getValue().toString() + ", " + entry.getDate().toString() + ");"; // TODO
                 stockHistoryInsertStatement.execute(stockHistoryInsertSQL);
             }
-
+            Logger.log("Stock succesfully saved into Database", LoggingLevel.DEBUG);
         } catch (SQLException e) {
             Logger.log("SQLException: " + e.getMessage(), LoggingLevel.ERROR);
             Logger.log("SQLState: " + e.getSQLState(), LoggingLevel.DEBUG);
