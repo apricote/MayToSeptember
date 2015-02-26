@@ -3,10 +3,8 @@ package Controller;
 import Model.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Vector;
 
 public class StockOptimizer {
