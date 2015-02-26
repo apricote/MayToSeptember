@@ -1,5 +1,8 @@
 package Model;
 
+import Controller.Logger;
+import Controller.LoggingLevel;
+
 import java.util.*;
 
 /**
@@ -88,6 +91,8 @@ public class StockHistory {
                 entries.remove();
             }
         }
+
+        Logger.log("StockData sucessfully removed", LoggingLevel.DEBUG);
     }
 
     /**
@@ -107,5 +112,7 @@ public class StockHistory {
                 entries.remove();
             }
         }
+
+        Logger.log("StockData from every Year sucessfully removed", LoggingLevel.DEBUG);
     }
 }
