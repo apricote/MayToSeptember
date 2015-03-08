@@ -9,90 +9,19 @@ import java.util.Vector;
 
 public class StockOptimizer {
 
-    private Stock stock;
-    private DateRange sellingTime;
-    private DateRange buyingTime;
-
     /**
-     * Create a new StockOptimizer based on the Stock.
-     * The sellingTime and buyingTime still need to be set before calling <code>optimize()</code>
-     * @param stock the stock that should be optimized
+     * Calculates the optimal selling and buying Dates for the constraints given in the
+     * <code>oStock</code> Object.
+     * @param oStock The constraints for the optimization
      */
-    public StockOptimizer(Stock stock) {
-        this.stock = stock;
-    }
-
-    /**
-     * Create a new StockOptimizer.
-     * The sellingTime, buyingTime and Stock need to be set before calling <code>optimize()</code>
-     */
-    public StockOptimizer() {
-        super();
-    }
-
-    /**
-     * Returns the stock
-     * @return stock
-     */
-    public Stock getStock() {
-        return stock;
-    }
-
-    /**
-     * Sets the Stock
-     * @param stock new Stock
-     */
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
-
-    /**
-     * Returns the selling Time
-     * @return sellingTime
-     */
-    public DateRange getSellingTime() {
-        return sellingTime;
-    }
-
-    /**
-     * Sets the selling Time
-     * @param sellingTime new sellingTime
-     */
-    public void setSellingTime(DateRange sellingTime) {
-        this.sellingTime = sellingTime;
-    }
-
-    /**
-     * Returns the buying Time
-     * @return buyingTime
-     */
-    public DateRange getBuyingTime() {
-        return buyingTime;
-    }
-
-    /**
-     * Sets the buying Time
-     * @param buyingTime new buyingTime
-     */
-    public void setBuyingTime(DateRange buyingTime) {
-        this.buyingTime = buyingTime;
-    }
-
-    /**
-     * Optimizes the Stock. It doesnt return the stock but just changes <code>Stock.optimalDays</code>
-     * of the <code>stock</code> Object. It does this by generating a list of all possible date combinations.
-     * Then iterating over the list to calculate each <code>performanceIndex</code> and to get the maximum value.
-     *
-     * With the given date ranges the optimal selling and buying dates are calculated and saved in the Stock Object
-     */
-    public void optimize() {
-        Vector<Date[]> dateCombinations = getPossibleDateCombinations();
+    public static void optimize(OptimizedStock oStock) {
+        Vector<Date[]> dateCombinations = getPossibleDateCombinations(oStock);
 
         Date[] currentOptimum = dateCombinations.firstElement();
         float performanceIndexOptimum = -1000; //Basically unset
 
         for(Date[] dateCombination : dateCombinations) {
-            float performanceIndex = calculatePerformanceIndex(dateCombination);
+            float performanceIndex = calculatePerformanceIndex(dateCombination, oStock.getOptimizedStock());
 
             if (performanceIndex > performanceIndexOptimum) {
                 performanceIndexOptimum = performanceIndex;
@@ -103,24 +32,22 @@ public class StockOptimizer {
         Logger.log("Final optimum: " + performanceIndexOptimum, LoggingLevel.INFO);
         Logger.log("For Days: Sell: " + currentOptimum[0] + " Buy: " + currentOptimum[1], LoggingLevel.INFO);
 
-        stock.setOptimalDays(currentOptimum);
+        oStock.setOptimizedData(currentOptimum, performanceIndexOptimum);
     }
 
     /**
      * Generates a Vector of all the possible Datecombinations.
      * Every dateCombination has one day from the sellingTime and one from the buyingTime.
-     *
-     * Before this method gets called, sellingTime and buyingTime need to be set. Otherwise it will rise a NullPointerException.
-     *
+
      * @return A Vector of all the combinations
      *          Every combination is an Array of length 2.
      *          The first index is the selling Date, and the second is the buying date.
      */
-    private Vector<Date[]> getPossibleDateCombinations() {
+    private static Vector<Date[]> getPossibleDateCombinations(OptimizedStock stock) {
         Vector<Date[]> dateCombinations = new Vector<>();
 
-        for(Date presentSellingDate : getSellingTime().getContainedDates()) {
-            for(Date presentBuyingDate : getBuyingTime().getContainedDates()) {
+        for(Date presentSellingDate : stock.getSellingTime().getContainedDates()) {
+            for(Date presentBuyingDate : stock.getBuyingTime().getContainedDates()) {
                 Date[] combination = {presentSellingDate, presentBuyingDate};
                 dateCombinations.add(combination);
             }
@@ -135,7 +62,7 @@ public class StockOptimizer {
      * @param dateCombination The dateCombination to calculate the pI for, based on the already set Stock
      * @return the performance Index of the given dateCombination
      */
-    private float calculatePerformanceIndex(Date[] dateCombination) {
+    private static float calculatePerformanceIndex(Date[] dateCombination, Stock stock) {
         /**
          * Saves the money and the stocks
          */
@@ -186,10 +113,6 @@ public class StockOptimizer {
         Assets assets = new Assets(starterMoney);
 
         DateRange breakTime = new DateRange(dateCombination[0], dateCombination[1]); // SellingDate -> BuyingDate
-
-        Date firstDate = stock.getHistory().getHistory().firstKey();
-        StockData firstDay = stock.getHistory().getStockData(firstDate).get(); // We can ignore the Optional because we assured
-                                                                                //that the key is in the History by using firstKey()
 
         for (Map.Entry<Date, StockData> data : stock.getHistory().getHistory().entrySet()) {
             if(breakTime.isInYearlyRange(data.getKey())) {
