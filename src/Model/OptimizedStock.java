@@ -175,4 +175,13 @@ public class OptimizedStock {
         performanceIndex = 0f;
         optimized = false;
     }
+
+    /**
+     * Returns the value of <code>optimized</code> and therefore shows if this Object contains
+     * current Optimization Data
+     * @return optimized
+     */
+    public boolean isOptimized() {
+        return optimized;
+    }
 }
