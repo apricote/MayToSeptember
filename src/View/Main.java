@@ -2,10 +2,11 @@ package View;
 
 import Controller.Logger;
 import Controller.LoggingLevel;
+import Model.Stock;
+import Model.OptimizedStock;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
@@ -15,7 +16,9 @@ import java.io.IOException;
 public class Main extends Application {
 
     private Stage primaryStage;
-    private BorderPane rootLayout;
+    private AnchorPane rootLayout;
+    private Stock stock;
+    private OptimizedStock oStock;
 
     public static void main(String[] args) {
         launch(args);
@@ -34,7 +37,7 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("Window.fxml"));
 
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = (AnchorPane) loader.load();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -48,5 +51,21 @@ public class Main extends Application {
             Logger.log("Root Layout could not be loaded", LoggingLevel.ERROR);
             e.printStackTrace();
         }
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
+    public OptimizedStock getOStock() {
+        return oStock;
+    }
+
+    public void setOStock(OptimizedStock oStock) {
+        this.oStock = oStock;
     }
 }

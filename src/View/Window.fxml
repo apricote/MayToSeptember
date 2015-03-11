@@ -6,30 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="730.0" minWidth="1000.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WindowController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <center>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.WindowController">
    <children>
       <SplitPane dividerPositions="0.6747851002865329" layoutX="369.0" layoutY="161.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -102,7 +79,7 @@
                                        </HBox.margin></Button>
                                  </children>
                               </HBox>
-                              <Button fx:id="loadStockButton" layoutX="14.0" layoutY="182.0" mnemonicParsing="false" text="Load Stock" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
+                              <Button fx:id="loadStockButton" layoutX="14.0" layoutY="182.0" mnemonicParsing="false" onAction="#loadStockButtonClicked" text="Load Stock" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
                            </children></AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
@@ -129,19 +106,19 @@
                                     <Label text="Daterange of Stockdata" GridPane.rowIndex="2" />
                                     <Label text="Entries loaded" GridPane.rowIndex="3" />
                                     <Label text="Selling Time Daterange" GridPane.rowIndex="4" />
-                                    <Label fx:id="stockNameLabel" text="Label" GridPane.columnIndex="1" />
-                                    <Label fx:id="stockShortNameLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label fx:id="daterangeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="entriesCountLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label fx:id="sellingTimeDaterangeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label fx:id="stockNameLabel" text="-" GridPane.columnIndex="1" />
+                                    <Label fx:id="stockShortNameLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label fx:id="daterangeLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="entriesCountLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label fx:id="sellingTimeDaterangeLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <Label text="Optimal Selling Date" GridPane.rowIndex="6" />
                                     <Label text="Optimal Buying Date" GridPane.rowIndex="7" />
-                                    <Label fx:id="sellingDateLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Label fx:id="buyingDateLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <Label fx:id="sellingDateLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <Label fx:id="buyingDateLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     <Label text="Performance Index" GridPane.rowIndex="8" />
-                                    <Label fx:id="performanceIndexLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <Label fx:id="performanceIndexLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                           <Label text="Buying Time Daterange" GridPane.rowIndex="5" />
-                                          <Label fx:id="buyingTimeDaterangeLabel" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <Label fx:id="buyingTimeDaterangeLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                  </children>
                               </GridPane>
                            </children></AnchorPane>
@@ -153,13 +130,3 @@
       </SplitPane>
    </children>
 </AnchorPane>
-   </center>
-   <bottom>
-      <AnchorPane prefHeight="21.0" prefWidth="1000.0" BorderPane.alignment="TOP_CENTER">
-         <children>
-            <Label fx:id="statusLabel" alignment="CENTER" text="Extremely Long Status String" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="4.0" />
-            <Separator layoutX="267.0" layoutY="2.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-         </children>
-      </AnchorPane>
-   </bottom>
-</BorderPane>
