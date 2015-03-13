@@ -2,14 +2,15 @@ package View;
 
 import Controller.Logger;
 import Controller.LoggingLevel;
-import Model.DatabaseConnection;
-import Model.Stock;
-import Model.OptimizedStock;
+import Controller.StockOptimizer;
+import Model.*;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+
+import java.time.LocalDate;
 
 public class WindowController {
 
@@ -129,5 +130,62 @@ public class WindowController {
 
             performanceIndexLabel.setText(oS.getPerformanceIndex() + "");
         }
+    }
+
+    @FXML
+    private void optimizeButtonClicked() {
+        if (mainApp.getStock() == null) {
+            return;
+            //TODO Errorhandling
+        }
+
+        if(sellingTimeStartPicker.getValue() == null) {
+            Logger.log("Null", LoggingLevel.ERROR);
+        } else {
+            Logger.log(sellingTimeStartPicker.getValue().toString(), LoggingLevel.ERROR);
+        }
+
+        if( sellingTimeStartPicker.getValue() == null ||
+                sellingTimeEndPicker.getValue() == null ||
+                buyingTimeStartPicker.getValue() == null ||
+                buyingTimeEndPicker.getValue() == null) {
+            return;
+            //TODO Errorhandling
+        }
+
+        Date sellingTimeStart = new Date(sellingTimeStartPicker.getValue().toString());
+        Date sellingTimeEnd = new Date(sellingTimeEndPicker.getValue().toString());
+        Date buyingTimeStart = new Date(buyingTimeStartPicker.getValue().toString());
+        Date buyingTimeEnd = new Date(buyingTimeEndPicker.getValue().toString());
+
+        DateRange sellingRange = new DateRange(sellingTimeStart, sellingTimeEnd);
+        DateRange buyingRange = new DateRange(buyingTimeStart, buyingTimeEnd);
+
+        OptimizedStock oStock = new OptimizedStock(mainApp.getStock(), sellingRange, buyingRange);
+        optimize(oStock);
+
+    }
+
+    @FXML
+    private void optimizeAllYearButtonClicked() {
+        if (mainApp.getStock() == null) {
+            return;
+            //TODO Errorhandling
+        }
+
+        DateRange sellingRange = new DateRange(new Date(1, 1, 2000), new Date(31, 12, 2000));
+        DateRange buyingRange = new DateRange(new Date(1, 1, 2000), new Date(31, 12, 2000));
+        OptimizedStock oStock = new OptimizedStock(mainApp.getStock(), sellingRange, buyingRange);
+
+        optimize(oStock);
+
+
+    }
+
+    private void optimize(OptimizedStock oStock) {
+        oStock = StockOptimizer.optimize(oStock);
+
+        mainApp.setOStock(oStock);
+        reloadOStockLabels();
     }
 }
