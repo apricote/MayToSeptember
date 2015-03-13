@@ -4,15 +4,21 @@ import Controller.Logger;
 import Controller.LoggingLevel;
 import Controller.StockOptimizer;
 import Model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import View.DateAxis;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
+import java.util.GregorianCalendar;
+import java.util.Map;
 
 public class WindowController {
 
@@ -82,6 +88,8 @@ public class WindowController {
         sellingTimeEndPicker.setValue(LocalDate.of(2015, 5, 31));
         buyingTimeStartPicker.setValue(LocalDate.of(2015, 9, 1));
         buyingTimeEndPicker.setValue(LocalDate.of(2015, 9, 30));
+
+        assetWorthGraph.setCreateSymbols(false);
     }
 
     public void setMainApp(Main mainApp) {
@@ -94,6 +102,7 @@ public class WindowController {
         Stock stock = db.getStockFromDatabase();
         mainApp.setStock(stock);
         reloadStockLabels();
+        redrawGraph();
     }
 
     private void reloadStockLabels() {
@@ -199,5 +208,124 @@ public class WindowController {
 
         mainApp.setOStock(oStock);
         reloadOStockLabels();
+        redrawGraph();
+    }
+
+    private void redrawGraph() {
+        if(mainApp.getStock() == null) {
+            return;
+            //TODO Errorhandling
+        }
+        ObservableList<XYChart.Series<java.util.Date, Number>> series = FXCollections.observableArrayList();
+
+        ObservableList<XYChart.Data<java.util.Date, Number>> stockSeriesData, oStockSeriesData;
+
+        stockSeriesData = generateStockSeriesData();
+        oStockSeriesData = generateOStockSeriesData();
+
+        if(stockSeriesData != null) {
+            series.add(new XYChart.Series<>("Normal " + mainApp.getStock().getShortName(), stockSeriesData));
+        }
+
+        if(oStockSeriesData != null) {
+            series.add(new XYChart.Series<>("Optimized " + mainApp.getStock().getShortName(), oStockSeriesData));
+        }
+
+        assetWorthGraph.setData(series);
+    }
+
+    private ObservableList<XYChart.Data<java.util.Date, Number>> generateStockSeriesData() {
+        ObservableList<XYChart.Data<java.util.Date, Number>> dataList = FXCollections.observableArrayList();
+
+        if(mainApp.getStock() != null) {
+            for(StockData entry : mainApp.getStock().getHistory().getHistory().values()) {
+                java.util.Date juDate = new GregorianCalendar(entry.getDate().getYear(), entry.getDate().getMonth(), entry.getDate().getDay()).getTime();
+                dataList.add(new XYChart.Data<>(juDate, entry.getValue()));
+            }
+        }
+
+        if(dataList.size() > 0) {
+            return dataList;
+        } else {
+            return null;
+        }
+    }
+
+    private ObservableList<XYChart.Data<java.util.Date, Number>> generateOStockSeriesData() {
+
+        class Assets {
+            BigDecimal amountOfMoney;
+            BigDecimal amountOfStocks;
+
+            /**
+             * Create a new Asset
+             * @param starterMoney The money that is in the bank account in the beginning
+             */
+            Assets(BigDecimal starterMoney) {
+                amountOfMoney = starterMoney;
+                amountOfStocks = new BigDecimal(0);
+            }
+
+            /**
+             * If there are any stocks left in the Asset, all of it will be sold and the equivalent of Money will be added.
+             * @param stockValue The value of the Stock for that it should be sold
+             */
+            void sellAllStocks(BigDecimal stockValue) {
+                if (amountOfStocks.compareTo(BigDecimal.ZERO) != 0) {
+
+                    BigDecimal valueOfStock = stockValue.multiply(amountOfStocks);
+                    amountOfMoney = amountOfMoney.add(valueOfStock);
+                    amountOfStocks = BigDecimal.ZERO;
+                }
+            }
+
+            /**
+             * If there is any money left in the Asset, all of it is used to buy Stocks.
+             * @param stockValue The value of the stock for that it should be bought
+             */
+            void buyAllStocks(BigDecimal stockValue) {
+                if (amountOfMoney.compareTo(BigDecimal.ZERO) != 0) {
+
+                    BigDecimal stocksFromMoney = amountOfMoney.divide(stockValue, MathContext.DECIMAL128);
+                    amountOfStocks = amountOfStocks.add(stocksFromMoney);
+                    amountOfMoney = BigDecimal.ZERO;
+                }
+            }
+        }
+
+        ObservableList<XYChart.Data<java.util.Date, Number>> dataList = FXCollections.observableArrayList();
+
+        if(mainApp.getStock() != null && mainApp.getOStock() != null) {
+            BigDecimal valueOfStockOnFirstDay = mainApp.getStock().getHistory().getStockData(mainApp.getStock().getHistory().getHistory().firstKey()).get().getValue();
+            Assets assets = new Assets(valueOfStockOnFirstDay);
+
+            DateRange breakTime = new DateRange(mainApp.getOStock().getOptimalDates()[0], mainApp.getOStock().getOptimalDates()[1]); // SellingDate -> BuyingDate
+
+            for (Map.Entry<Date, StockData> data : mainApp.getStock().getHistory().getHistory().entrySet()) {
+                BigDecimal valueOfAssets;
+                if(breakTime.isInYearlyRange(data.getKey())) {
+                    assets.sellAllStocks(data.getValue().getValue());
+
+                    valueOfAssets = assets.amountOfMoney;
+
+                } else {
+                    assets.sellAllStocks(data.getValue().getValue());
+                    valueOfAssets = assets.amountOfMoney;
+
+                    assets.buyAllStocks(data.getValue().getValue());
+                }
+
+                java.util.Date juDate = new GregorianCalendar(data.getKey().getYear(), data.getKey().getMonth(), data.getKey().getDay()).getTime();
+                dataList.add(new XYChart.Data<>(juDate, valueOfAssets));
+
+            }
+        }
+
+        if(dataList.size() > 0) {
+            return dataList;
+        } else {
+            return null;
+        }
     }
 }
+
