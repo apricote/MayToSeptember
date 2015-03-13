@@ -6,16 +6,18 @@ import Controller.StockOptimizer;
 import Model.*;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import View.DateAxis;
 
 import java.time.LocalDate;
 
 public class WindowController {
 
     @FXML
-    private LineChart<Number, Number> assetWorthGraph;
+    private LineChart<java.util.Date, Number> assetWorthGraph;
 
     @FXML
     private DatePicker sellingTimeStartPicker;
@@ -64,6 +66,12 @@ public class WindowController {
 
     @FXML
     private Label performanceIndexLabel;
+
+    @FXML
+    private CategoryAxis xAxis;
+
+    @FXML
+    private NumberAxis yAxis;
 
     private Main mainApp;
 
