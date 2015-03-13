@@ -14,7 +14,7 @@ public class StockOptimizer {
      * <code>oStock</code> Object.
      * @param oStock The constraints for the optimization
      */
-    public static void optimize(OptimizedStock oStock) {
+    public static OptimizedStock optimize(OptimizedStock oStock) {
         Vector<Date[]> dateCombinations = getPossibleDateCombinations(oStock);
 
         Date[] currentOptimum = dateCombinations.firstElement();
@@ -33,6 +33,7 @@ public class StockOptimizer {
         Logger.log("For Days: Sell: " + currentOptimum[0] + " Buy: " + currentOptimum[1], LoggingLevel.INFO);
 
         oStock.setOptimizedData(currentOptimum, performanceIndexOptimum);
+        return oStock;
     }
 
     /**
