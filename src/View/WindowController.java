@@ -69,7 +69,11 @@ public class WindowController {
 
     @FXML
     private void initialize() {
-
+        // Setup DatePickers for MayToSeptember selection
+        sellingTimeStartPicker.setValue(LocalDate.of(2015, 5, 1));
+        sellingTimeEndPicker.setValue(LocalDate.of(2015, 5, 31));
+        buyingTimeStartPicker.setValue(LocalDate.of(2015, 9, 1));
+        buyingTimeEndPicker.setValue(LocalDate.of(2015, 9, 30));
     }
 
     public void setMainApp(Main mainApp) {
