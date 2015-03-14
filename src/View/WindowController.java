@@ -239,7 +239,7 @@ public class WindowController {
 
         if(mainApp.getStock() != null) {
             for(StockData entry : mainApp.getStock().getHistory().getHistory().values()) {
-                java.util.Date juDate = new GregorianCalendar(entry.getDate().getYear(), entry.getDate().getMonth(), entry.getDate().getDay()).getTime();
+                java.util.Date juDate = new GregorianCalendar(entry.getDate().getYear(), entry.getDate().getMonth() - 1, entry.getDate().getDay()).getTime();
                 dataList.add(new XYChart.Data<>(juDate, entry.getValue()));
             }
         }
@@ -315,7 +315,7 @@ public class WindowController {
                     assets.buyAllStocks(data.getValue().getValue());
                 }
 
-                java.util.Date juDate = new GregorianCalendar(data.getKey().getYear(), data.getKey().getMonth(), data.getKey().getDay()).getTime();
+                java.util.Date juDate = new GregorianCalendar(data.getKey().getYear(), data.getKey().getMonth() - 1, data.getKey().getDay()).getTime();
                 dataList.add(new XYChart.Data<>(juDate, valueOfAssets));
 
             }
