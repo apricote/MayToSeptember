@@ -81,7 +81,11 @@ public class DateRange {
         Date rangeEnd = getEndDate();
 
         if(rangeBegin.getMonth() <= date.getMonth() && rangeEnd.getMonth() >= date.getMonth()) {
-            if(rangeBegin.getDay() <= date.getDay() && rangeEnd.getDay() >= date.getDay()) {
+            if(rangeBegin.getMonth() == date.getMonth() && rangeBegin.getDay() > date.getDay()) {
+                return false;
+            } else if (rangeEnd.getMonth() == date.getMonth() && rangeEnd.getDay() < date.getDay()) {
+                return false;
+            } else {
                 return true;
             }
         }
