@@ -74,7 +74,7 @@ public class WindowController {
     private Label performanceIndexLabel;
 
     @FXML
-    private CategoryAxis xAxis;
+    private DateAxis xAxis;
 
     @FXML
     private NumberAxis yAxis;
