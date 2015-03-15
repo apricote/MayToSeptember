@@ -29,10 +29,17 @@
     \usepackage{etoolbox}
     \patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{fancy}}{}{}
 
+    \usepackage{bibgerm}
+    \bibliographystyle{gerplain}
+
+
 \begin{document}
 
     \begin{titlepage}
-        \title{Entwicklung eines Algorithmus zur Lösung eines Optimierungsproblemes und der Datenanalyse anhand des Beispiels der Dax-Börsendaten}
+        \title{Verspricht die Sell-In-May-Anlagestrategie Erfolg?\\
+                –\\
+                Entwicklung eines Algorithmus zur Lösung dieses Optimierungsproblemes
+                und der Datenanalyse anhand des Beispiels der Dax-Börsendaten}
         \author{Julian Tölle\\
                 Ev. Gymnasium Werther\\
                 Informatik-Grundkurs\\
@@ -51,18 +58,44 @@
 
     \chapter{Einführung ins Thema}
         
-        \section{Der Dax}
+        \section{Der Deutsche Aktienindex}
+            Der DAX, kurz für Deutscher Aktienindex, wurde im Jahr 1988 erstmalig veröffentlicht,
+            und
             % Was ist der Dax
             % Abgrenzung zu anderen Aktienindizes
             % Gründung
             % Handelsort
             % Auswahl der Wertpapiere
 
-        \section{Sell-in-May}
+        \section{Sell-in-May als Anlagestrategie}
+            \begin{quote}
+                Sell in May and go away, but remember to come back in September.
+            \end{quote}
+            So lautet eine alte Börsenweisheit die sich darauf bezieht dass es
+            in den Wintermonaten eine erheblich höhere Rendite für Anlagen gibt
+            als in den Sommermonate. Nach ihr ist es am effektivsten im Mai alle
+            aktuell gehaltenen Aktien zu verkaufen und im September wieder
+            einzukaufen, um so den durchschnittlichen Wertverlust der Aktien im
+            Sommer abzuwarten um dann wenn die Kurse wieder besser werden
+            günstig einzukaufen.
+
+            Der Effekt wurde nur geringfügig Wissenschaftlich untersucht, eine
+            Studie ist allerdings zu dem Urteil gekommen dass er in 36 von 37
+            untersuchten Ländern nachweisbar war\cite{bouman2002halloween}.
             % Sell in May and go away but remember to come back in september
             % Bisherige Studien zu dem Thema
 
         \section{Problemstellung}
+            Die Zeitspanne eines Monats als Zeitraum für den Verkauf und Einkauf
+            der Aktien ist sehr grob. er gibt keinen Aufschluss über die besten
+            Tageskombinationen sondern nur eine grobe Richtung bei der es zu
+            unsicher ist ihr blind zu folgen. Und wo genau der maximale Profit
+            steckt weiß auch so keiner richtig. Es wird also Zeit sich einmal
+            anzugucken an welchen Tagen im Mai und September man historisch
+            gesehen am besten hätte handeln sollen um den maximalen Profit
+            herauszuholen. Beispielsweise verwende ich hier den DAX da er der
+            bekannteste und meistgenutzte Indikator für die deutsche
+            Aktienlandschaft ist.
             % Anwendung von Sell-in-May auf den Dax
             % Optimale Tage für die letzten Jahre
             % -> Optimierungsproblem
@@ -71,11 +104,48 @@
 
     \chapter{Entwicklung des Algorithmus}
 
-        \section{Grundidee}
+        \section{Algorithmische Grundidee}
+            Der Algorithmus besteht auf der Grundidee des Bruteforcing.
+            Bruteforcing wird die %TODO
+            Sie zeichnet sich durch pures ausprobieren, um die Lösung zu finden,
+            aus. Da die betrachteten Möglichkeiten und Datenmengen nicht ins
+            utopische steigen, ist auch der zusätzliche Rechenaufwand einer
+            Bruteforcing Lösung annehmbar. Optimierungspotenzial besteht hier
+            allerdings schon.
+
+            Zu Beginn wird eine Liste erstellt, jedes Element dieser besteht aus
+            zwei Tagen. Der erste Tag kommt aus der Zeitspanne zum Verkauf, hier
+            also aus dem Mai, der zweite Tag kommt aus der Zeitspanne zum
+            Einkauf, hier also aus dem September. Für jede mögliche Kombination
+            der Elemente dieser beiden Listen gibt es einen Eintrag in der neu
+            erstellten Liste.
+
+            Nun wird für jede Kombination ihrer Rentabilität in Form eines
+            Performance Indexes berechnet. Dies geschieht indem die Aktionen
+            simuliert werden. Am Anfang gibt es eine bestimmte Geldmenge, und
+            nun werden alle geladenen Tageskurse des DAX chronologisch
+            abgelaufen. Falls sich das Datum des Tageskurses zwischen Verkauf
+            und Kauf befindet, werden alle noch im Depot vorhandenen Aktien
+            verkauft, und falls es sich außerhalb dieser Zeitspannen befindet
+            wird alles vorhandene Geld genutzt um möglichst viele Aktien zu
+            kaufen. Dieses lazy-selling, das heißt zum nächstmöglichen Termin nach
+            Beginn der Zeiträume, erspart eine komplizierte Fehlerbehebung falls
+            es zu den genauen Tagen der Kombination keine Kurse gibt.
+
+            Nach durchlaufen aller Tageskurse werden alle Aktien zum Kurs des
+            letzten Tages verkauft und das nun vorhandene Geld mit dem
+            Startbetrag verglichen:
+            \begin{equation}
+                performanceIndex = \frac{Geld_{Ende}}{Geld_{Anfang}}
+            \end{equation}
+
+
+
+            Der
             % Bruteforcing
             % performanceIndex
 
-        \section{Implementation}
+        \section{Erläuterung der Implementation}
             %
 
     \chapter{Evaluation der Ergebnisse}
@@ -93,5 +163,7 @@
     \chapter{Schlusserklärung}
         Ich erkläre, dass ich die Facharbeit ohne fremde Hilfe angefertigt habe
         und nur die im Literaturverzeichnis angeführten Quellen und Hilfsmittel benutzt habe.
+
+    \bibliography{bibindex}
 
 \end{document}
