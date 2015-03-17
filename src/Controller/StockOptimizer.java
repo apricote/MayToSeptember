@@ -53,6 +53,7 @@ public class StockOptimizer {
                 dateCombinations.add(combination);
             }
         }
+        Logger.log("Date Combinations:" + dateCombinations.size(), LoggingLevel.INFO);
         return dateCombinations;
     }
 
