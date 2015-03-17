@@ -1,13 +1,10 @@
+F = Facharbeit
+
 all:
-	pdflatex Facharbeit
-	bibtex Facharbeit
-	pdflatex Facharbeit
-	pdflatex Facharbeit
+	pdflatex $(F)
+	biber $(F)
+	pdflatex $(F)
+	pdflatex $(F)
 
 clean:
-	rm Facharbeit.aux
-	rm Facharbeit.log
-	rm Facharbeit.bbl
-	rm Facharbeit.blg
-	rm Facharbeit.toc
-	:all
+	rm -f $(F).bbl $(F).blg $(F).pdf $(F).dvi $(F).aux $(F).bcf $(F).log $(F).run.xml $(F).toc
