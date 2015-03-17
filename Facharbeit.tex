@@ -1,7 +1,7 @@
 \documentclass[12pt, a4paper, titlepage]{report}
 
     %Germanish stuff
-    \usepackage[utf8x]{inputenc}
+    \usepackage[utf8]{inputenc}
     \usepackage[T1]{fontenc}
     \usepackage{ngerman}
 
@@ -30,8 +30,14 @@
     \patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{fancy}}{}{}
 
     \usepackage{bibgerm}
-    \bibliographystyle{gerplain}
+    \usepackage[backend=biber,
+    			style=authoryear-icomp,
+    			sortlocale=de_DE]{biblatex}
+    \usepackage[babel, german=guillemets]{csquotes}
+	\addbibresource{bibindex.bib}
+	
 
+	%\newcommand{\inlinecode}[1]{\texttt{#1}}
 
 \begin{document}
 
@@ -76,18 +82,18 @@
             als in den Sommermonate. Nach ihr ist es am effektivsten im Mai alle
             aktuell gehaltenen Aktien zu verkaufen und im September wieder
             einzukaufen, um so den durchschnittlichen Wertverlust der Aktien im
-            Sommer abzuwarten um dann wenn die Kurse wieder besser werden
+            Sommer abzuwarten und dann wenn die Kurse wieder besser werden
             günstig einzukaufen.
 
             Der Effekt wurde nur geringfügig Wissenschaftlich untersucht, eine
             Studie ist allerdings zu dem Urteil gekommen dass er in 36 von 37
-            untersuchten Ländern nachweisbar war\cite{bouman2002halloween}.
+            untersuchten Ländern nachweisbar war\footcite{bouman2002halloween}. % Näher darauf eingehen
             % Sell in May and go away but remember to come back in september
             % Bisherige Studien zu dem Thema
 
         \section{Problemstellung}
             Die Zeitspanne eines Monats als Zeitraum für den Verkauf und Einkauf
-            der Aktien ist sehr grob. er gibt keinen Aufschluss über die besten
+            der Aktien ist sehr grob. Er gibt keinen Aufschluss über die besten
             Tageskombinationen sondern nur eine grobe Richtung bei der es zu
             unsicher ist ihr blind zu folgen. Und wo genau der maximale Profit
             steckt weiß auch so keiner richtig. Es wird also Zeit sich einmal
@@ -106,25 +112,31 @@
 
         \section{Algorithmische Grundidee}
             Der Algorithmus besteht auf der Grundidee des Bruteforcing.
-            Bruteforcing wird die %TODO
-            Sie zeichnet sich durch pures ausprobieren, um die Lösung zu finden,
-            aus. Da die betrachteten Möglichkeiten und Datenmengen nicht ins
-            utopische steigen, ist auch der zusätzliche Rechenaufwand einer
-            Bruteforcing Lösung annehmbar. Optimierungspotenzial besteht hier
-            allerdings schon.
+            Bruteforcing besteht auf der Idee dass man, obwohl es keinen
+            effizienten, und möglicherweise komplizierteren, Algorithmus gibt, man
+            einfach alle Optionen "ausprobiert" und die beste auswählt. Dies kann
+            allerdings auch dazu führen dass die Laufzeit des Algorithmus bei großen
+            Datenmengen weit über der eines effizienteren Algorithmus liegen kann.
+            Da sich die Fragestellung allerdings nur im Bereich von wenigen Millionen
+            Rechnungen\footnote{30 (Tage im Mai) * 31 (Tage im September) * 5500
+            (Tageskurse) = 5.115.000} befindet, ist Bruteforcing eine brauchbare
+            Alternative zu der Entwicklung eines alternativen Algorithmus.
+   			Für eine extensive Nutzung des entwickelten Programms allerdings sollte
+   			er noch weiter optimiert werden.
 
-            Zu Beginn wird eine Liste erstellt, jedes Element dieser besteht aus
-            zwei Tagen. Der erste Tag kommt aus der Zeitspanne zum Verkauf, hier
-            also aus dem Mai, der zweite Tag kommt aus der Zeitspanne zum
-            Einkauf, hier also aus dem September. Für jede mögliche Kombination
-            der Elemente dieser beiden Listen gibt es einen Eintrag in der neu
-            erstellten Liste.
+            Zu Beginn wird eine Liste, bestehend aus jeder durchzurechnenden Option,
+            erstellt, jedes Element dieser besteht aus zwei Tagen. Der erste Tag 
+            kommt aus der Zeitspanne zum Verkauf, hier also aus dem Mai, der zweite
+            Tag kommt aus der Zeitspanne zum Einkauf, hier also aus dem September.
+            Für jede mögliche Kombination der Elemente dieser beiden Listen gibt es
+            einen Eintrag in der neu erstellten Liste.
 
             Nun wird für jede Kombination ihrer Rentabilität in Form eines
-            Performance Indexes berechnet. Dies geschieht indem die Aktionen
-            simuliert werden. Am Anfang gibt es eine bestimmte Geldmenge, und
-            nun werden alle geladenen Tageskurse des DAX chronologisch
-            abgelaufen. Falls sich das Datum des Tageskurses zwischen Verkauf
+            Performance Indexes berechnet. Dies geschieht indem mit Hilfe eines
+            simulierten Depots der Weg des Geldes nachgestellt wird.
+            Am Anfang gibt es eine bestimmte Geldmenge, und nun werden alle
+            geladenen Tageskurse des DAX chronologisch abgelaufen.
+            Falls sich das Datum des Tageskurses zwischen Verkauf
             und Kauf befindet, werden alle noch im Depot vorhandenen Aktien
             verkauft, und falls es sich außerhalb dieser Zeitspannen befindet
             wird alles vorhandene Geld genutzt um möglichst viele Aktien zu
@@ -138,12 +150,9 @@
             \begin{equation}
                 performanceIndex = \frac{Geld_{Ende}}{Geld_{Anfang}}
             \end{equation}
-
-
-
-            Der
-            % Bruteforcing
-            % performanceIndex
+            Nachdem dieser für alle möglichen Kombination berechnet wurde, wird
+            das Optimum ermittelt und die korrespondierende Tageskombination
+            abgespeichert.
 
         \section{Erläuterung der Implementation}
             %
@@ -164,6 +173,6 @@
         Ich erkläre, dass ich die Facharbeit ohne fremde Hilfe angefertigt habe
         und nur die im Literaturverzeichnis angeführten Quellen und Hilfsmittel benutzt habe.
 
-    \bibliography{bibindex}
+    
 
 \end{document}
