@@ -29,10 +29,11 @@
     \usepackage{etoolbox}
     \patchcmd{\chapter}{\thispagestyle{plain}}{\thispagestyle{fancy}}{}{}
 
-    \usepackage{bibgerm}
+    %\usepackage{bibgerm}
     \usepackage[backend=biber,
-    			style=authoryear-icomp,
-    			sortlocale=de_DE]{biblatex}
+    			style=verbose,
+    			sortlocale=de_DE,
+    			language=german]{biblatex}
     \usepackage[babel, german=guillemets]{csquotes}
 	\addbibresource{bibindex.bib}
 	
@@ -65,8 +66,35 @@
     \chapter{Einführung ins Thema}
         
         \section{Der Deutsche Aktienindex}
-            Der DAX, kurz für Deutscher Aktienindex, wurde im Jahr 1988 erstmalig veröffentlicht,
-            und
+            Der DAX, kurz für Deutscher Aktienindex, wurde im Jahr 1988 erstmalig
+            veröffentlicht, und beinhaltet die 30 größten und umsatzstärksten Aktien
+            Deutschlands. Er basiert auf den Kursen der Frankfurter Wertpapierbörse,
+            der größten deutschen Börse.
+            
+            Damit ein Unternehmen in den DAX kommen kann muss es mehrere Kriterien
+            erfüllen. Zuerst muss das Unternehmen im Prime Standard der Frankfurter Börse
+            gelistet sein, dies ist ein stärker regulierter Bereich der Börse der
+            hohe Transparenzvorraussetzungen erfüllen muss
+            \footcite{deutscheboersePrimeStandard}.
+            Das nächste Kriterium ist dass das Unternehmen durchgehend bei Xetra gehandelt
+            wird. Xetra ist die elektrische Handelssystem das an der Frankfurter Börse
+            verwendet wird. Es übernimmt die gesamte Verwaltung des Handels sodass die
+            Aufträge schneller als manuell abgearbeitet werden können und in hoher
+            Frequenz neue Kurse bereitgestellt werden können\footcite{boerseFrankfurtXetra}.
+            Das letzte Bedingung ist ein Streubesitz von über 10\%. Als Streubesitz werden
+            wird der Teil der Aktien einer AG genannt, die nicht als große Pakete wenigen
+            Investoren und Besitzern gehören, sondern frei in der Börse gehandelt werden
+            \footcite{gablerFreefloat}.  
+            
+            Der DAX ist, anders als die meisten anderen großen
+            Aktienindizes (Dow Jones Industrial Average, FTSE, Nikkei 225) ein
+            Performance Index, was heißt dass alle Dividendenauszahlungen von Aktien
+            diesem Index in den Index reinvestiert werden. Normalerweise, wenn eine Aktie
+            Dividenden ausschüttet sinkt der Wert der Aktie um den Betrag der Dividende,
+            ein Kursindex würde also nach der Dividendenausschüttung an Punkten verlieren,
+            der DAX allerdings nicht, da der Dividendenabschlag durch die positive
+            Bewertung der Auszahlung ausgeglichen wird.
+            
             % Was ist der Dax
             % Abgrenzung zu anderen Aktienindizes
             % Gründung
@@ -85,9 +113,14 @@
             Sommer abzuwarten und dann wenn die Kurse wieder besser werden
             günstig einzukaufen.
 
-            Der Effekt wurde nur geringfügig Wissenschaftlich untersucht, eine
+            Der Effekt wurde nur geringfügig wissenschaftlich untersucht, eine
             Studie ist allerdings zu dem Urteil gekommen dass er in 36 von 37
-            untersuchten Ländern nachweisbar war\footcite{bouman2002halloween}. % Näher darauf eingehen
+            untersuchten Ländern nachweisbar war\footcite{bouman2002halloween}.
+            Um dies zu belegen, wurde die Rentabilität einer ''Buy and Hold Strategy``
+            mit der Sell-in-May Anlagestrategie für alle untersuchten Märkte über
+            mehrere Jahre verglichen. Dies ergab, dass das Sell-in-May Verfahren 
+            durchschnittlich 1,5\%, im Hinblick auf die jährliche Rendite, besser
+            war als die Aktien dass ganze Jahr zu halten\footnote{Vgl. Bouman und Jacobsen 2002, Seite 14 Tabelle A1}.
             % Sell in May and go away but remember to come back in september
             % Bisherige Studien zu dem Thema
 
@@ -96,12 +129,16 @@
             der Aktien ist sehr grob. Er gibt keinen Aufschluss über die besten
             Tageskombinationen sondern nur eine grobe Richtung bei der es zu
             unsicher ist ihr blind zu folgen. Und wo genau der maximale Profit
-            steckt weiß auch so keiner richtig. Es wird also Zeit sich einmal
-            anzugucken an welchen Tagen im Mai und September man historisch
-            gesehen am besten hätte handeln sollen um den maximalen Profit
-            herauszuholen. Beispielsweise verwende ich hier den DAX da er der
-            bekannteste und meistgenutzte Indikator für die deutsche
-            Aktienlandschaft ist.
+            steckt weiß auch so keiner richtig. Magere 1,5\% verspricht die
+            vorher erwähnte Studie. Es wird Zeit, dass man diese Rendite maximiert.
+            Da Marktvorhersagen allerdings nur schwer möglich sind, richten wir
+            in dieser Facharbeit unser Augenmerk auf die vergangenen Jahre und 
+            schreiben einen Algorithmus der die, historisch gesehen, optimalsten Tage
+            für den Kauf und Verkauf der Aktien berechnet. In der Auswertung dieser
+            Daten wird dann eine mögliche Tendenz gesucht, die die zukünftigen
+            Investitionen vereinfachen soll.
+            Als zu betrachtenden Kurs verwende ich den DAX, da er der bekannteste und
+            meistgenutzte Indikator für die deutsche Aktienlandschaft ist.
             % Anwendung von Sell-in-May auf den Dax
             % Optimale Tage für die letzten Jahre
             % -> Optimierungsproblem
@@ -118,8 +155,8 @@
             allerdings auch dazu führen dass die Laufzeit des Algorithmus bei großen
             Datenmengen weit über der eines effizienteren Algorithmus liegen kann.
             Da sich die Fragestellung allerdings nur im Bereich von wenigen Millionen
-            Rechnungen\footnote{30 (Tage im Mai) * 31 (Tage im September) * 5500
-            (Tageskurse) = 5.115.000} befindet, ist Bruteforcing eine brauchbare
+            Rechnungen\footnote{30 (Tage im Mai) * 31 (Tage im September) * 4370
+            (Tageskurse) = 4.064.100} befindet, ist Bruteforcing eine brauchbare
             Alternative zu der Entwicklung eines alternativen Algorithmus.
    			Für eine extensive Nutzung des entwickelten Programms allerdings sollte
    			er noch weiter optimiert werden.
@@ -155,7 +192,11 @@
             abgespeichert.
 
         \section{Erläuterung der Implementation}
-            %
+            Nachdem nun der Ablauf des Algorithmus grob umrissen wurde, wird nun
+            auf die genaue Implementation eingegangen. Alle folgenden Codelistings
+            sind der Klasse com.toelle.maytoseptember.controller.StockOptimizer entnommen.
+            
+            
 
     \chapter{Evaluation der Ergebnisse}
 
@@ -172,7 +213,7 @@
     \chapter{Schlusserklärung}
         Ich erkläre, dass ich die Facharbeit ohne fremde Hilfe angefertigt habe
         und nur die im Literaturverzeichnis angeführten Quellen und Hilfsmittel benutzt habe.
-
-    
+        
+    \printbibliography
 
 \end{document}
