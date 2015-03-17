@@ -1,9 +1,9 @@
-package View;
+package com.toelle.maytoseptember.view;
 
-import Controller.Logger;
-import Controller.LoggingLevel;
-import Controller.StockOptimizer;
-import Model.*;
+import com.toelle.maytoseptember.controller.Logger;
+import com.toelle.maytoseptember.controller.LoggingLevel;
+import com.toelle.maytoseptember.controller.StockOptimizer;
+import com.toelle.maytoseptember.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

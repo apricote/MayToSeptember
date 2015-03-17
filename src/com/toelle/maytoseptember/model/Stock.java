@@ -1,4 +1,4 @@
-package Model;
+package com.toelle.maytoseptember.model;
 
 /**
  * This class resembles a single Stock and its market history.

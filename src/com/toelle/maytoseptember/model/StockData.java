@@ -1,4 +1,4 @@
-package Model;
+package com.toelle.maytoseptember.model;
 
 import java.math.BigDecimal;
 

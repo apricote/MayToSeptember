@@ -1,10 +1,10 @@
-package Controller;
+package com.toelle.maytoseptember.controller;
 
 /**
  * All of the configurations the app needs to run
  */
 public class Settings {
-    public static LoggingLevel LOGGING_LEVEL = LoggingLevel.INFO;
+    public static LoggingLevel LOGGING_LEVEL = LoggingLevel.DEBUG;
 
     public static String MYSQL_SERVER_ADDRESS = "localhost";
     public static String MYSQL_DATABASE = "maytoseptember";

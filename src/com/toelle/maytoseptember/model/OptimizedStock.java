@@ -1,7 +1,7 @@
-package Model;
+package com.toelle.maytoseptember.model;
 
-import Controller.Logger;
-import Controller.LoggingLevel;
+import com.toelle.maytoseptember.controller.Logger;
+import com.toelle.maytoseptember.controller.LoggingLevel;
 
 /**
  * This class represents an optimized Stock. It just has a Stock as an attribute but

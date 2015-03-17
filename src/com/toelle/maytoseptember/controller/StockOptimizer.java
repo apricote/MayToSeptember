@@ -1,6 +1,6 @@
-package Controller;
+package com.toelle.maytoseptember.controller;
 
-import Model.*;
+import com.toelle.maytoseptember.model.*;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

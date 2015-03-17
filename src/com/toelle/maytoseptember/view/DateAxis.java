@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package View;
+package com.toelle.maytoseptember.view;
 
 import com.sun.javafx.charts.ChartLayoutAnimator;
 import javafx.animation.KeyFrame;

@@ -1,9 +1,9 @@
-package View;
+package com.toelle.maytoseptember.view;
 
-import Controller.Logger;
-import Controller.LoggingLevel;
-import Model.Stock;
-import Model.OptimizedStock;
+import com.toelle.maytoseptember.controller.Logger;
+import com.toelle.maytoseptember.controller.LoggingLevel;
+import com.toelle.maytoseptember.model.Stock;
+import com.toelle.maytoseptember.model.OptimizedStock;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;

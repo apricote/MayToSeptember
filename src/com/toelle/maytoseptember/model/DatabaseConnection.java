@@ -1,8 +1,8 @@
-package Model;
+package com.toelle.maytoseptember.model;
 
-import Controller.Logger;
-import Controller.LoggingLevel;
-import Controller.Settings;
+import com.toelle.maytoseptember.controller.Logger;
+import com.toelle.maytoseptember.controller.LoggingLevel;
+import com.toelle.maytoseptember.controller.Settings;
 
 import java.math.BigDecimal;
 import java.sql.*;
