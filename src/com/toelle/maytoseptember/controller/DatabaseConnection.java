@@ -1,13 +1,9 @@
 package com.toelle.maytoseptember.controller;
 
-import com.toelle.maytoseptember.controller.Logger;
-import com.toelle.maytoseptember.controller.LoggingLevel;
-import com.toelle.maytoseptember.controller.Settings;
 import com.toelle.maytoseptember.model.*;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.sql.Date;
 
 public class DatabaseConnection {
     private Connection connection = null;
