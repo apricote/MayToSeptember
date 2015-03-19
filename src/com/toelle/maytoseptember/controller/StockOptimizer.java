@@ -18,7 +18,7 @@ public class StockOptimizer {
         Vector<Date[]> dateCombinations = getPossibleDateCombinations(oStock);
 
         Date[] currentOptimum = dateCombinations.firstElement();
-        float performanceIndexOptimum = -1000; //Basically unset
+        float performanceIndexOptimum = -1f;
 
         for(Date[] dateCombination : dateCombinations) {
             float performanceIndex = calculatePerformanceIndex(dateCombination, oStock.getOptimizedStock());
