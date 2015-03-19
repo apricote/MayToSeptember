@@ -1,11 +1,13 @@
-package com.toelle.maytoseptember.model;
+package com.toelle.maytoseptember.controller;
 
 import com.toelle.maytoseptember.controller.Logger;
 import com.toelle.maytoseptember.controller.LoggingLevel;
 import com.toelle.maytoseptember.controller.Settings;
+import com.toelle.maytoseptember.model.*;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.sql.Date;
 
 public class DatabaseConnection {
     private Connection connection = null;
@@ -56,7 +58,7 @@ public class DatabaseConnection {
                 BigDecimal price = stockHistoryRS.getBigDecimal("Price");
 
                 String dateString = stockHistoryRS.getString("Date");
-                Date date = new Date(dateString);
+                com.toelle.maytoseptember.model.Date date = new com.toelle.maytoseptember.model.Date(dateString);
 
                 StockData newData = new StockData(price, date);
                 history.addData(newData);
