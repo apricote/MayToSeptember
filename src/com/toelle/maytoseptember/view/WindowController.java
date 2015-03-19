@@ -1,5 +1,6 @@
 package com.toelle.maytoseptember.view;
 
+import com.toelle.maytoseptember.controller.DatabaseConnection;
 import com.toelle.maytoseptember.controller.Logger;
 import com.toelle.maytoseptember.controller.LoggingLevel;
 import com.toelle.maytoseptember.controller.StockOptimizer;
