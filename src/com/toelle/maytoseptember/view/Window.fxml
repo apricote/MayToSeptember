@@ -69,10 +69,6 @@
                               <Label layoutX="14.0" layoutY="14.0" text="Controls" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
                               <HBox alignment="BOTTOM_RIGHT" layoutX="95.0" layoutY="182.0" prefHeight="25.0" prefWidth="300.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="14.0">
                                  <children>
-                                    <Button fx:id="optimizeAllYearButton" layoutX="69.0" layoutY="189.0" mnemonicParsing="false" onAction="#optimizeAllYearButtonClicked" text="Optimize for all Year">
-                                       <HBox.margin>
-                                          <Insets right="3.0" />
-                                       </HBox.margin></Button>
                                     <Button fx:id="optimizeButton" defaultButton="true" layoutX="148.0" layoutY="189.0" mnemonicParsing="false" onAction="#optimizeButtonClicked" text="Optimize ">
                                        <HBox.margin>
                                           <Insets left="3.0" />
