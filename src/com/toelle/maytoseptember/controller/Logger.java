@@ -29,7 +29,7 @@ public class Logger {
         String sourceString = "[" + sun.reflect.Reflection.getCallerClass(2).getCanonicalName() + "]";
         String timeString = "[" + LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss.SSSSSS")) + "]";
 
-        String loggedMessage = timeString + " " + levelString + " " + sourceString + ": " + msg + System.lineSeparator();
+        String loggedMessage = timeString + levelString + sourceString + ": " + msg + System.lineSeparator();
 
         System.out.print(loggedMessage);
         try {
