@@ -1,107 +1,57 @@
 package com.toelle.maytoseptember.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toelle.maytoseptember.model.*;
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class DatabaseConnection {
-    private Connection connection = null;
 
-    /**
-     * Creates a new <code>DatabaseConnection</code> from the Settings
-     */
     public DatabaseConnection() {
-        try {
-            Class.forName(Settings.JDBC_DRIVER_STRING);
-        } catch (ClassNotFoundException e) {
-            Logger.log("JDBC Driver not found", LoggingLevel.ERROR);
-            e.printStackTrace();
-        }
-        Logger.log("JDBC Driver loaded!", LoggingLevel.DEBUG);
-
-        try {
-            connection = DriverManager.getConnection(Settings.JDBC_CONNECTION_STRING, Settings.MYSQL_USERNAME, Settings.MYSQL_PASSWORD);
-        } catch (SQLException e) {
-            Logger.log("SQLException: " + e.getMessage(), LoggingLevel.ERROR);
-            Logger.log("SQLState: " + e.getSQLState(), LoggingLevel.DEBUG);
-            Logger.log("VendorError: " + e.getErrorCode(), LoggingLevel.DEBUG);
-            e.printStackTrace();
-        }
-        Logger.log("Connection to Database established", LoggingLevel.DEBUG);
     }
 
     /**
-     * This Method creates a Stock Object from the Database.
+     * This Method creates a Stock Object from the JSON.
+     * It looks up the file <code>./db.json</code> and reads from that.
      *
-     * @return the saved Stock object from database
+     * @return the saved Stock object from json
      */
     public Stock getStockFromDatabase() {
-        Stock resultStock = null;
+        Path dbPath = Paths.get("db.json");
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jn;
+        String stockName = "";
+        String stockShortName = "";
+        StockHistory sh = new StockHistory();
+
         try {
-            Statement stockStatement = connection.createStatement();
-            ResultSet stockRS = stockStatement.executeQuery("SELECT Name, ShortName FROM stock WHERE id = 1");
-            stockRS.next(); // Only the first Row returned will be used as the Stock name + short name
-            String stockName = stockRS.getString("Name");
-            String stockShortName = stockRS.getString("ShortName");
-            resultStock = new Stock(stockName, stockShortName);
+            jn = mapper.readTree(dbPath.toFile());
+            stockName = jn.get("Name").asText();
+            stockShortName = jn.get("Shortname").asText();
 
-            Statement stockHistoryStatement = connection.createStatement();
-            ResultSet stockHistoryRS = stockHistoryStatement.executeQuery("SELECT Date, Price FROM stockhistory");
+            JsonNode jnStockData = jn.get("StockData");
 
-            StockHistory history = new StockHistory();
-            while(stockHistoryRS.next()) {
-                BigDecimal price = stockHistoryRS.getBigDecimal("Price");
+            for(int i = 0; i < jnStockData.size(); i++) {
+                JsonNode jnStockDataElement = jnStockData.get(i);
+                Date stockDataDate = new Date(jnStockDataElement.get("Date").asText());
+                BigDecimal stockDataValue = new BigDecimal(jnStockDataElement.get("Value").asText());
 
-                String dateString = stockHistoryRS.getString("Date");
-                com.toelle.maytoseptember.model.Date date = new com.toelle.maytoseptember.model.Date(dateString);
-
-                StockData newData = new StockData(price, date);
-                history.addData(newData);
+                StockData stockData = new StockData(stockDataValue, stockDataDate);
+                sh.addData(stockData);
             }
-
-            resultStock.setHistory(history);
-        } catch (SQLException e) {
-            Logger.log("SQLException: " + e.getMessage(), LoggingLevel.ERROR);
-            Logger.log("SQLState: " + e.getSQLState(), LoggingLevel.DEBUG);
-            Logger.log("VendorError: " + e.getErrorCode(), LoggingLevel.DEBUG);
+        } catch (IOException e) {
             e.printStackTrace();
+            Logger.log("Die Datei db.json wurde nicht gefunden.", LoggingLevel.ERROR);
+            Logger.log("Es konnte kein Stockobjekt generiert werden." , LoggingLevel.WARNING);
         }
-        Logger.log("Stock returned from Database", LoggingLevel.DEBUG);
-        return resultStock;
-    }
 
-    /**
-     * Saves the Stock to Database.
-     * Overwrites the old saved stock data.
-     * @param saveStock The stock to be saved
-     */
-    public void saveStockToDatabase(Stock saveStock) {
-        try {
-            Statement stockStatement = connection.createStatement();
-            Statement stockHistoryDeleteStatement = connection.createStatement();
 
-            String stockUpdateSQL = "UPDATE Stock " +
-                                        "SET name = " + saveStock.getName() + ", shortname = " + saveStock.getShortName() + " " +
-                                        "WHERE id=1;"; // Just one row is used from that table
-
-            String stockHistoryDeleteSQL = "DELETE FROM StockHistory";
-
-            stockStatement.execute(stockUpdateSQL);
-            stockHistoryDeleteStatement.execute(stockHistoryDeleteSQL); // Clear up history
-
-            for(StockData entry : saveStock.getHistory().getHistory().values()) {
-                Statement stockHistoryInsertStatement = connection.createStatement();
-                String stockHistoryInsertSQL = "INSERT INTO StockHistory" +
-                                                "VALUES (" + entry.getValue().toString() + ", " + entry.getDate().toString() + ");"; // TODO
-                stockHistoryInsertStatement.execute(stockHistoryInsertSQL);
-            }
-            Logger.log("Stock succesfully saved into Database", LoggingLevel.DEBUG);
-        } catch (SQLException e) {
-            Logger.log("SQLException: " + e.getMessage(), LoggingLevel.ERROR);
-            Logger.log("SQLState: " + e.getSQLState(), LoggingLevel.DEBUG);
-            Logger.log("VendorError: " + e.getErrorCode(), LoggingLevel.DEBUG);
-            e.printStackTrace();
-        }
+        Logger.log("Finished reading in Data from JSON", LoggingLevel.DEBUG);
+        //TODO reimplement
+        return new Stock(stockName, stockShortName, sh);
     }
 }
