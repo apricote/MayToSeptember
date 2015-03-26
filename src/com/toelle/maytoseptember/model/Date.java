@@ -26,13 +26,20 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     * Creates a new Date based on the String in the YYYY-MM-DD format.
-     * @param date String in YYYY-MM-DD format
+     * Creates a new Date based on the String in one of the following formats:
+     * <ul>
+     *     <li>YYYY-MM-DD</li>
+     *     <li>YYYY-MM-D</li>
+     *     <li>YYYY-M-DD</li>
+     *     <li>YYYY-M-D</li>
+     * </ul>
+     * @param date String in one of the accepted formats
      */
     public Date(String date) {
+
         this.year = Integer.parseInt(date.substring(0, 4));
-        this.month = Integer.parseInt(date.substring(5, 7));
-        this.day = Integer.parseInt(date.substring(8, 10));
+        this.month = Integer.parseInt(date.substring(5, date.lastIndexOf("-")));
+        this.day = Integer.parseInt(date.substring(date.lastIndexOf("-") + 1, date.length()));
     }
 
     /**
