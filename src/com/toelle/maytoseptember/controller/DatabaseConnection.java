@@ -49,9 +49,7 @@ public class DatabaseConnection {
             Logger.log("Es konnte kein Stockobjekt generiert werden." , LoggingLevel.WARNING);
         }
 
-
         Logger.log("Finished reading in Data from JSON", LoggingLevel.DEBUG);
-        //TODO reimplement
         return new Stock(stockName, stockShortName, sh);
     }
 }
