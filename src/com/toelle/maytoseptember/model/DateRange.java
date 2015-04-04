@@ -79,17 +79,32 @@ public class DateRange {
     public boolean isInYearlyRange(Date date) {
         Date rangeBegin = getBeginDate();
         Date rangeEnd = getEndDate();
-
-        if(rangeBegin.getMonth() <= date.getMonth() && rangeEnd.getMonth() >= date.getMonth()) {
-            if(rangeBegin.getMonth() == date.getMonth() && rangeBegin.getDay() > date.getDay()) {
-                return false;
-            } else if (rangeEnd.getMonth() == date.getMonth() && rangeEnd.getDay() < date.getDay()) {
-                return false;
-            } else {
-                return true;
+        if(!isLappingOver()) {
+            if (rangeBegin.getMonth() <= date.getMonth() && rangeEnd.getMonth() >= date.getMonth()) {
+                if (rangeBegin.getMonth() == date.getMonth() && rangeBegin.getDay() > date.getDay()) {
+                    return false;
+                } else if (rangeEnd.getMonth() == date.getMonth() && rangeEnd.getDay() < date.getDay()) {
+                    return false;
+                } else {
+                    return true;
+                }
             }
+            return false;
+        } else {
+            DateRange tillNewYear = new DateRange(rangeBegin, new Date(31, 12, 2000));
+            DateRange fromNewYear = new DateRange(new Date(1, 1, 2000), rangeEnd);
+            return tillNewYear.isInYearlyRange(date) || fromNewYear.isInYearlyRange(date);
         }
+    }
 
-        return false;
+    public boolean isLappingOver() {
+        if (getBeginDate().getMonth() > getEndDate().getMonth()) {
+            return true;
+        } else if (getBeginDate().getMonth() == getEndDate().getMonth() &&
+                getBeginDate().getDay() > getEndDate().getDay()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
