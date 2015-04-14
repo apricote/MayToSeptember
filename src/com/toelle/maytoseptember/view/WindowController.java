@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
@@ -100,7 +101,16 @@ public class WindowController {
     @FXML
     private void loadStockButtonClicked() {
         DatabaseConnection db = new DatabaseConnection();
-        Stock stock = db.getStockFromDatabase();
+        Stock stock;
+
+        try {
+            stock = db.getStockFromDatabase();
+        } catch (IOException e) {
+            Logger.log("Stock could not be loaded.", LoggingLevel.WARNING);
+            showStockLoadingErrorAlert();
+            return;
+        }
+
         mainApp.setStock(stock);
         reloadStockLabels();
         redrawGraph();
@@ -157,8 +167,8 @@ public class WindowController {
     @FXML
     private void optimizeButtonClicked() {
         if (mainApp.getStock() == null) {
+            showNoStockAlert();
             return;
-            //TODO Errorhandling
         }
 
         if(sellingTimeStartPicker.getValue() == null) {
@@ -171,8 +181,8 @@ public class WindowController {
                 sellingTimeEndPicker.getValue() == null ||
                 buyingTimeStartPicker.getValue() == null ||
                 buyingTimeEndPicker.getValue() == null) {
+            showWrongDatesAlert();
             return;
-            //TODO Errorhandling
         }
 
         Date sellingTimeStart = new Date(sellingTimeStartPicker.getValue().toString());
@@ -191,8 +201,8 @@ public class WindowController {
     @FXML
     private void optimizeAllYearButtonClicked() {
         if (mainApp.getStock() == null) {
+            showNoStockAlert();
             return;
-            //TODO Errorhandling
         }
 
         DateRange sellingRange = new DateRange(new Date(1, 1, 2000), new Date(31, 12, 2000));
@@ -327,6 +337,45 @@ public class WindowController {
         } else {
             return null;
         }
+    }
+
+    private void showNoStockAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+
+        alert.setTitle("Missing Stock");
+        alert.setHeaderText("No Stock is loaded yet");
+        alert.setContentText("Do you want to try to load a stock?");
+
+        ButtonType buttonYes = new ButtonType("Yes");
+        ButtonType buttonNo = new ButtonType("No");
+        ButtonType buttonCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonYes, buttonNo, buttonCancel);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if(result.get() == buttonYes) {
+            loadStockButtonClicked();
+        }
+    }
+
+    private void showWrongDatesAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Wrong Dates");
+        alert.setHeaderText("Please use valid dates");
+        alert.setContentText("Every field must be filled and the end of each range must be after the beginning.");
+
+        alert.showAndWait();
+    }
+
+    private void showStockLoadingErrorAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("File missing");
+        alert.setHeaderText("Database file db.json not found!");
+        alert.setContentText("Please ensure that the correct file in the correct format is in the " +
+                "same folder as this app.");
+
+        alert.showAndWait();
     }
 }
 

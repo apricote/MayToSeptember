@@ -20,7 +20,7 @@ public class DatabaseConnection {
      *
      * @return the saved Stock object from json
      */
-    public Stock getStockFromDatabase() {
+    public Stock getStockFromDatabase() throws IOException {
         Path dbPath = Paths.get("db.json");
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jn;
@@ -28,25 +28,19 @@ public class DatabaseConnection {
         String stockShortName = "";
         StockHistory sh = new StockHistory();
 
-        try {
-            jn = mapper.readTree(dbPath.toFile());
-            stockName = jn.get("Name").asText();
-            stockShortName = jn.get("Shortname").asText();
+        jn = mapper.readTree(dbPath.toFile());
+        stockName = jn.get("Name").asText();
+        stockShortName = jn.get("Shortname").asText();
 
-            JsonNode jnStockData = jn.get("StockData");
+        JsonNode jnStockData = jn.get("StockData");
 
-            for(int i = 0; i < jnStockData.size(); i++) {
-                JsonNode jnStockDataElement = jnStockData.get(i);
-                Date stockDataDate = new Date(jnStockDataElement.get("Date").asText());
-                BigDecimal stockDataValue = new BigDecimal(jnStockDataElement.get("Value").asText());
+        for(int i = 0; i < jnStockData.size(); i++) {
+            JsonNode jnStockDataElement = jnStockData.get(i);
+            Date stockDataDate = new Date(jnStockDataElement.get("Date").asText());
+            BigDecimal stockDataValue = new BigDecimal(jnStockDataElement.get("Value").asText());
 
-                StockData stockData = new StockData(stockDataValue, stockDataDate);
-                sh.addData(stockData);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Logger.log("Die Datei db.json wurde nicht gefunden.", LoggingLevel.ERROR);
-            Logger.log("Es konnte kein Stockobjekt generiert werden." , LoggingLevel.WARNING);
+            StockData stockData = new StockData(stockDataValue, stockDataDate);
+            sh.addData(stockData);
         }
 
         Logger.log("Finished reading in Data from JSON", LoggingLevel.DEBUG);
