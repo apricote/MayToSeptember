@@ -11,9 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -21,6 +19,7 @@ import java.math.MathContext;
 import java.time.LocalDate;
 import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.Optional;
 
 public class WindowController {
 
