@@ -170,12 +170,6 @@ public class WindowController {
             return;
         }
 
-        if(sellingTimeStartPicker.getValue() == null) {
-            Logger.log("Null", LoggingLevel.ERROR);
-        } else {
-            Logger.log(sellingTimeStartPicker.getValue().toString(), LoggingLevel.ERROR);
-        }
-
         if( sellingTimeStartPicker.getValue() == null ||
                 sellingTimeEndPicker.getValue() == null ||
                 buyingTimeStartPicker.getValue() == null ||
