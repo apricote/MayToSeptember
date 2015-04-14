@@ -108,7 +108,7 @@ public class StockOptimizer {
             }
         }
 
-        float performanceIndex = 0f;
+        float performanceIndex;
 
 
         BigDecimal starterMoney = new BigDecimal(1000);

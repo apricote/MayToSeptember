@@ -24,8 +24,8 @@ public class DatabaseConnection {
         Path dbPath = Paths.get("db.json");
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jn;
-        String stockName = "";
-        String stockShortName = "";
+        String stockName;
+        String stockShortName;
         StockHistory sh = new StockHistory();
 
         jn = mapper.readTree(dbPath.toFile());

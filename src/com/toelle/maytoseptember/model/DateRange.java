@@ -63,11 +63,7 @@ public class DateRange {
      * @return true if it is in the range, <br> false if not
      */
     public boolean isInRange(Date date) {
-        if(date.compareTo(beginDate) >= 0 && date.compareTo(endDate) <= 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return date.compareTo(beginDate) >= 0 && date.compareTo(endDate) <= 0;
     }
 
     /**
@@ -83,11 +79,8 @@ public class DateRange {
             if (rangeBegin.getMonth() <= date.getMonth() && rangeEnd.getMonth() >= date.getMonth()) {
                 if (rangeBegin.getMonth() == date.getMonth() && rangeBegin.getDay() > date.getDay()) {
                     return false;
-                } else if (rangeEnd.getMonth() == date.getMonth() && rangeEnd.getDay() < date.getDay()) {
-                    return false;
-                } else {
-                    return true;
-                }
+                } else
+                    return !(rangeEnd.getMonth() == date.getMonth() && rangeEnd.getDay() < date.getDay());
             }
             return false;
         } else {
@@ -100,11 +93,7 @@ public class DateRange {
     public boolean isLappingOver() {
         if (getBeginDate().getMonth() > getEndDate().getMonth()) {
             return true;
-        } else if (getBeginDate().getMonth() == getEndDate().getMonth() &&
-                getBeginDate().getDay() > getEndDate().getDay()) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return getBeginDate().getMonth() == getEndDate().getMonth() &&
+                getBeginDate().getDay() > getEndDate().getDay();
     }
 }

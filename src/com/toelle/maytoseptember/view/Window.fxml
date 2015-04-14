@@ -6,127 +6,274 @@
 <?import javafx.scene.layout.*?>
 <?import com.toelle.maytoseptember.view.DateAxis?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="703.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toelle.maytoseptember.view.WindowController">
-   <children>
-      <SplitPane dividerPositions="0.6747851002865329" layoutX="369.0" layoutY="161.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-               <children>
-                  <LineChart fx:id="assetWorthGraph" layoutX="159.0" layoutY="-23.0" prefHeight="354.0" prefWidth="998.0" title="Asset-Worth-Graph" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <xAxis>
-                      <DateAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </LineChart>
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-               <children>
-                  <SplitPane dividerPositions="0.5" layoutX="444.0" layoutY="68.0" prefHeight="336.0" prefWidth="998.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="221.0" prefWidth="471.0">
-                           <children>
-                              <GridPane layoutX="62.0" layoutY="8.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="35.0">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Selling Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                    <Label text="Buying Time" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                    <DatePicker fx:id="sellingTimeStartPicker" promptText="Selling Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="3.0" right="3.0" />
-                                       </GridPane.margin>
-                                    </DatePicker>
-                                    <DatePicker fx:id="buyingTimeStartPicker" promptText="Buying Time" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="3.0" right="3.0" />
-                                       </GridPane.margin>
-                                    </DatePicker>
-                                    <Label text="Start of Range" GridPane.rowIndex="1" />
-                                    <Label text="End of Range" GridPane.rowIndex="2" />
-                                    <DatePicker fx:id="sellingTimeEndPicker" promptText="Selling Time" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets left="3.0" right="3.0" />
-                                       </GridPane.margin>
-                                    </DatePicker>
-                                    <DatePicker fx:id="buyingTimeEndPicker" promptText="Buying Time" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets left="3.0" right="3.0" />
-                                       </GridPane.margin>
-                                    </DatePicker>
-                                 </children>
-                              </GridPane>
-                              <Label layoutX="14.0" layoutY="14.0" text="Controls" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-                              <HBox alignment="BOTTOM_RIGHT" layoutX="95.0" layoutY="182.0" prefHeight="25.0" prefWidth="300.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="14.0">
-                                 <children>
-                                   <Button fx:id="optimizeAllYearButton" layoutX="69.0" layoutY="189.0" mnemonicParsing="false" onAction="#optimizeAllYearButtonClicked" text="Optimize for all Year">
-                                       <HBox.margin>
-                                          <Insets right="3.0" />
-                                       </HBox.margin></Button>
-                                    <Button fx:id="optimizeButton" defaultButton="true" layoutX="148.0" layoutY="189.0" mnemonicParsing="false" onAction="#optimizeButtonClicked" text="Optimize ">
-                                       <HBox.margin>
-                                          <Insets left="3.0" />
-                                       </HBox.margin></Button>
-                                 </children>
-                              </HBox>
-                              <Button fx:id="loadStockButton" layoutX="14.0" layoutY="182.0" mnemonicParsing="false" onAction="#loadStockButtonClicked" text="Load Stock" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" />
-                           </children></AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                           <children>
-                              <Label layoutX="14.0" layoutY="14.0" text="Stock Information" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
-                              <GridPane layoutX="14.0" layoutY="29.0" prefHeight="175.0" prefWidth="450.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="35.0">
-                                <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                    <RowConstraints percentHeight="12.5" vgrow="SOMETIMES" />
-                                  <RowConstraints percentHeight="12.5" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="184.0" minHeight="0.0" percentHeight="12.5" prefHeight="0.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="184.0" minHeight="10.0" percentHeight="12.5" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="184.0" minHeight="10.0" percentHeight="12.5" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="184.0" minHeight="10.0" percentHeight="12.5" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="184.0" minHeight="10.0" percentHeight="12.5" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="184.0" minHeight="10.0" percentHeight="12.5" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="184.0" minHeight="10.0" percentHeight="12.5" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label text="Stock Name" />
-                                    <Label text="Stock Short Name" GridPane.rowIndex="1" />
-                                    <Label text="Daterange of Stockdata" GridPane.rowIndex="2" />
-                                    <Label text="Entries loaded" GridPane.rowIndex="3" />
-                                    <Label text="Selling Time Daterange" GridPane.rowIndex="4" />
-                                    <Label fx:id="stockNameLabel" text="-" GridPane.columnIndex="1" />
-                                    <Label fx:id="stockShortNameLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label fx:id="daterangeLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="entriesCountLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label fx:id="sellingTimeDaterangeLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label text="Optimal Selling Date" GridPane.rowIndex="6" />
-                                    <Label text="Optimal Buying Date" GridPane.rowIndex="7" />
-                                    <Label fx:id="sellingDateLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <Label fx:id="buyingDateLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <Label text="Performance Index" GridPane.rowIndex="8" />
-                                    <Label fx:id="performanceIndexLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                          <Label text="Buying Time Daterange" GridPane.rowIndex="5" />
-                                          <Label fx:id="buyingTimeDaterangeLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                 </children>
-                              </GridPane>
-                           </children></AnchorPane>
-                    </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="703.0" prefWidth="1000.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.toelle.maytoseptember.view.WindowController">
+    <SplitPane dividerPositions="0.6747851002865329" layoutX="369.0"
+               layoutY="161.0" orientation="VERTICAL" prefHeight="700.0"
+               prefWidth="1000.0" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="0.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0"
+                    prefWidth="160.0">
+            <LineChart fx:id="assetWorthGraph" layoutX="159.0"
+                       layoutY="-23.0" prefHeight="354.0"
+                       prefWidth="998.0" title="Asset-Worth-Graph"
+                       AnchorPane.bottomAnchor="0.0"
+                       AnchorPane.leftAnchor="0.0"
+                       AnchorPane.rightAnchor="0.0"
+                       AnchorPane.topAnchor="0.0">
+                <xAxis>
+                    <DateAxis side="BOTTOM"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis side="LEFT"/>
+                </yAxis>
+            </LineChart>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0"
+                    prefWidth="160.0">
+            <SplitPane dividerPositions="0.5" layoutX="444.0"
+                       layoutY="68.0" prefHeight="336.0"
+                       prefWidth="998.0" AnchorPane.bottomAnchor="0.0"
+                       AnchorPane.leftAnchor="0.0"
+                       AnchorPane.rightAnchor="0.0"
+                       AnchorPane.topAnchor="0.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0"
+                            prefHeight="221.0" prefWidth="471.0">
+                    <GridPane layoutX="62.0" layoutY="8.0"
+                              AnchorPane.leftAnchor="14.0"
+                              AnchorPane.rightAnchor="14.0"
+                              AnchorPane.topAnchor="35.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES"
+                                               maxWidth="100.0"
+                                               minWidth="10.0"
+                                               prefWidth="100.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES"
+                                               minWidth="10.0"
+                                               prefWidth="100.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES"
+                                               minWidth="10.0"
+                                               prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints minHeight="10.0"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <Label text="Selling Time"
+                               GridPane.columnIndex="1"
+                               GridPane.halignment="CENTER"/>
+                        <Label text="Buying Time"
+                               GridPane.columnIndex="2"
+                               GridPane.halignment="CENTER"/>
+                        <DatePicker
+                                fx:id="sellingTimeStartPicker"
+                                promptText="Selling Time"
+                                GridPane.columnIndex="1"
+                                GridPane.halignment="CENTER"
+                                GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets left="3.0"
+                                        right="3.0"/>
+                            </GridPane.margin>
+                        </DatePicker>
+                        <DatePicker
+                                fx:id="buyingTimeStartPicker"
+                                promptText="Buying Time"
+                                GridPane.columnIndex="2"
+                                GridPane.halignment="CENTER"
+                                GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets left="3.0"
+                                        right="3.0"/>
+                            </GridPane.margin>
+                        </DatePicker>
+                        <Label text="Start of Range"
+                               GridPane.rowIndex="1"/>
+                        <Label text="End of Range"
+                               GridPane.rowIndex="2"/>
+                        <DatePicker
+                                fx:id="sellingTimeEndPicker"
+                                promptText="Selling Time"
+                                GridPane.columnIndex="1"
+                                GridPane.halignment="CENTER"
+                                GridPane.rowIndex="2">
+                            <GridPane.margin>
+                                <Insets left="3.0"
+                                        right="3.0"/>
+                            </GridPane.margin>
+                        </DatePicker>
+                        <DatePicker
+                                fx:id="buyingTimeEndPicker"
+                                promptText="Buying Time"
+                                GridPane.columnIndex="2"
+                                GridPane.halignment="CENTER"
+                                GridPane.rowIndex="2">
+                            <GridPane.margin>
+                                <Insets left="3.0"
+                                        right="3.0"/>
+                            </GridPane.margin>
+                        </DatePicker>
+                    </GridPane>
+                    <Label layoutX="14.0" layoutY="14.0"
+                           text="Controls"
+                           AnchorPane.leftAnchor="14.0"
+                           AnchorPane.topAnchor="14.0"/>
+                    <HBox alignment="BOTTOM_RIGHT"
+                          layoutX="95.0" layoutY="182.0"
+                          prefHeight="25.0" prefWidth="300.0"
+                          AnchorPane.bottomAnchor="14.0"
+                          AnchorPane.leftAnchor="180.0"
+                          AnchorPane.rightAnchor="14.0">
+                        <Button fx:id="optimizeAllYearButton"
+                                layoutX="69.0"
+                                layoutY="189.0"
+                                mnemonicParsing="false"
+                                onAction="#optimizeAllYearButtonClicked"
+                                text="Optimize for all Year">
+                            <HBox.margin>
+                                <Insets right="3.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="optimizeButton"
+                                defaultButton="true"
+                                layoutX="148.0"
+                                layoutY="189.0"
+                                mnemonicParsing="false"
+                                onAction="#optimizeButtonClicked"
+                                text="Optimize ">
+                            <HBox.margin>
+                                <Insets left="3.0"/>
+                            </HBox.margin>
+                        </Button>
+                    </HBox>
+                    <Button fx:id="loadStockButton"
+                            layoutX="14.0" layoutY="182.0"
+                            mnemonicParsing="false"
+                            onAction="#loadStockButtonClicked"
+                            text="Load Stock"
+                            AnchorPane.bottomAnchor="14.0"
+                            AnchorPane.leftAnchor="14.0"/>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0"
+                            prefHeight="160.0" prefWidth="100.0">
+                    <Label layoutX="14.0" layoutY="14.0"
+                           text="Stock Information"
+                           AnchorPane.leftAnchor="14.0"
+                           AnchorPane.topAnchor="14.0"/>
+                    <GridPane layoutX="14.0" layoutY="29.0"
+                              prefHeight="175.0"
+                              prefWidth="450.0"
+                              AnchorPane.leftAnchor="14.0"
+                              AnchorPane.topAnchor="35.0">
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES"
+                                               minWidth="10.0"
+                                               prefWidth="100.0"/>
+                            <ColumnConstraints hgrow="SOMETIMES"
+                                               minWidth="10.0"
+                                               prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints percentHeight="12.5"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints percentHeight="12.5"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints maxHeight="184.0"
+                                            minHeight="0.0"
+                                            percentHeight="12.5"
+                                            prefHeight="0.0"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints maxHeight="184.0"
+                                            minHeight="10.0"
+                                            percentHeight="12.5"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints maxHeight="184.0"
+                                            minHeight="10.0"
+                                            percentHeight="12.5"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints maxHeight="184.0"
+                                            minHeight="10.0"
+                                            percentHeight="12.5"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints maxHeight="184.0"
+                                            minHeight="10.0"
+                                            percentHeight="12.5"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints maxHeight="184.0"
+                                            minHeight="10.0"
+                                            percentHeight="12.5"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                            <RowConstraints maxHeight="184.0"
+                                            minHeight="10.0"
+                                            percentHeight="12.5"
+                                            prefHeight="30.0"
+                                            vgrow="SOMETIMES"/>
+                        </rowConstraints>
+                        <Label text="Stock Name"/>
+                        <Label text="Stock Short Name"
+                               GridPane.rowIndex="1"/>
+                        <Label text="Daterange of Stockdata"
+                               GridPane.rowIndex="2"/>
+                        <Label text="Entries loaded"
+                               GridPane.rowIndex="3"/>
+                        <Label text="Selling Time Daterange"
+                               GridPane.rowIndex="4"/>
+                        <Label fx:id="stockNameLabel" text="-"
+                               GridPane.columnIndex="1"/>
+                        <Label fx:id="stockShortNameLabel"
+                               text="-"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"/>
+                        <Label fx:id="daterangeLabel" text="-"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="2"/>
+                        <Label fx:id="entriesCountLabel"
+                               text="-"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="3"/>
+                        <Label fx:id="sellingTimeDaterangeLabel"
+                               text="-" GridPane.columnIndex="1"
+                               GridPane.rowIndex="4"/>
+                        <Label text="Optimal Selling Date"
+                               GridPane.rowIndex="6"/>
+                        <Label text="Optimal Buying Date"
+                               GridPane.rowIndex="7"/>
+                        <Label fx:id="sellingDateLabel" text="-"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="6"/>
+                        <Label fx:id="buyingDateLabel" text="-"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="7"/>
+                        <Label text="Performance Index"
+                               GridPane.rowIndex="8"/>
+                        <Label fx:id="performanceIndexLabel"
+                               text="-"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="8"/>
+                        <Label text="Buying Time Daterange"
+                               GridPane.rowIndex="5"/>
+                        <Label fx:id="buyingTimeDaterangeLabel"
+                               text="-" GridPane.columnIndex="1"
+                               GridPane.rowIndex="5"/>
+                    </GridPane>
+                </AnchorPane>
+            </SplitPane>
+        </AnchorPane>
+    </SplitPane>
 </AnchorPane>
